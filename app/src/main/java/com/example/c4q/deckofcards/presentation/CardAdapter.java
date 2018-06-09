@@ -2,6 +2,7 @@ package com.example.c4q.deckofcards.presentation;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +57,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
         }
 
         public void onBind(Cards cards) {
-            Picasso.with(itemView.getContext()).load(cards.getImages().getImage()).into(cardImage);
+            Picasso.with(itemView.getContext()).load(cards.getImage()).into(cardImage);
         }
     }
 
