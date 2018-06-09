@@ -8,11 +8,13 @@ public class Cards {
     private String value;
     private String suit;
     private Images images;
+    private String image;
 
-    public Cards(String value, String suit, Images images) {
+    public Cards(String value, String suit, Images images, String image) {
         this.value = value;
         this.suit = suit;
         this.images = images;
+        this.image = image;
     }
 
     public String getValue() {
@@ -37,5 +39,13 @@ public class Cards {
 
     public void setImages(Images images) {
         this.images = images;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
