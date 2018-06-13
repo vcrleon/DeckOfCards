@@ -7,13 +7,11 @@ package com.example.c4q.deckofcards.data;
 public class Cards {
     private String value;
     private String suit;
-    private Images images;
     private String image;
 
-    public Cards(String value, String suit, Images images, String image) {
+    public Cards(String value, String suit, String image) {
         this.value = value;
         this.suit = suit;
-        this.images = images;
         this.image = image;
     }
 
@@ -31,14 +29,6 @@ public class Cards {
 
     public void setSuit(String suit) {
         this.suit = suit;
-    }
-
-    public Images getImages() {
-        return images;
-    }
-
-    public void setImages(Images images) {
-        this.images = images;
     }
 
     public String getImage() {

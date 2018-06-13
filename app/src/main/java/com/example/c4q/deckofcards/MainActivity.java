@@ -4,7 +4,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.c4q.deckofcards.data.Cards;
 import com.example.c4q.deckofcards.data.CardsApiService;
-import com.example.c4q.deckofcards.data.ShuffleApiResponse;
+import com.example.c4q.deckofcards.data.CardApiResponse;
 import com.example.c4q.deckofcards.presentation.CardAdapter;
 
 import java.util.ArrayList;
@@ -32,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     private Button drawCardsBttn;
     private String shuffledId;
     private int remainingCards;
-    private Retrofit retrofit;
     private RecyclerView recyclerView;
     private CardAdapter adapter;
 
@@ -46,19 +44,22 @@ public class MainActivity extends AppCompatActivity {
         adapter = new CardAdapter(new ArrayList<Cards>());
         recyclerView.setAdapter(adapter);
 
-       retrofit = new Retrofit.Builder()
-                .baseUrl(CardsApiService.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        shuffleCards();
+        drawCards();
+
+
+    }
+
+    public void shuffleCards(){
 
         shuffleCardsBttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CardsApiService cardsApiService = retrofit.create(CardsApiService.class);
-                Call<ShuffleApiResponse> call = cardsApiService.getShuffledDeck();
-                call.enqueue(new Callback<ShuffleApiResponse>() {
+
+                Call<CardApiResponse> call = getCardsApiService().getShuffledDeck();
+                call.enqueue(new Callback<CardApiResponse>() {
                     @Override
-                    public void onResponse(Call<ShuffleApiResponse> call, Response<ShuffleApiResponse> response) {
+                    public void onResponse(Call<CardApiResponse> call, Response<CardApiResponse> response) {
                         shuffledId = response.body().getDeck_id();
                         remainingCards = response.body().getRemaining();
                         Log.d("shuffled cards", shuffledId + " " + remainingCards);
@@ -66,12 +67,17 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<ShuffleApiResponse> call, Throwable t) {
-
+                    public void onFailure(Call<CardApiResponse> call, Throwable t) {
+                        t.printStackTrace();
                     }
                 });
+
             }
         });
+
+    }
+
+    public void drawCards(){
 
         drawCardsBttn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,20 +90,19 @@ public class MainActivity extends AppCompatActivity {
                 } else if(cardsChosen > remainingCards){
                     cardsInput.setError(getString(R.string.less_cards_error, remainingCards+""));
                 } else {
-                    CardsApiService cardsApiService = retrofit.create(CardsApiService.class);
-                    Call<ShuffleApiResponse> call = cardsApiService.getCards(shuffledId, cardsChosen);
-                    call.enqueue(new Callback<ShuffleApiResponse>() {
+                    Call<CardApiResponse> call = getCardsApiService().getCards(shuffledId, cardsChosen);
+                    call.enqueue(new Callback<CardApiResponse>() {
                         @Override
-                        public void onResponse(Call<ShuffleApiResponse> call, Response<ShuffleApiResponse> response) {
+                        public void onResponse(Call<CardApiResponse> call, Response<CardApiResponse> response) {
                             List<Cards> cards = response.body().getCards(); //a list of the urls
-                           adapter.addCards(cards);
-                           adapter.notifyDataSetChanged();
+                            adapter.addCards(cards);
+                            adapter.notifyDataSetChanged();
 
                             Log.d("cards deck", cards.toString()); //i'm getting back the objects but for some reason they are not displaying on the recycler view
                             Log.d("card name", cards.get(0).getSuit());
                         }
                         @Override
-                        public void onFailure(Call<ShuffleApiResponse> call, Throwable t) {
+                        public void onFailure(Call<CardApiResponse> call, Throwable t) {
                             t.printStackTrace();
                         }
                     });
@@ -109,6 +114,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public CardsApiService getCardsApiService(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(CardsApiService.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        return retrofit.create(CardsApiService.class);
     }
 
     public void setViews(){
