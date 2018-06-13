@@ -13,9 +13,9 @@ public interface CardsApiService {
     public static final String BASE_URL = "https://deckofcardsapi.com/api/deck/";
 
     @GET("new/shuffle/")
-    Call<ShuffleApiResponse> getShuffledDeck();
+    Call<CardApiResponse> getShuffledDeck();
 
     @GET("{deck_id}/draw/?count=num_cards")
-    Call<ShuffleApiResponse> getCards(@Path("deck_id") String cards, @Query("count") int numOfCards);
+    Call<CardApiResponse> getCards(@Path("deck_id") String cards, @Query("count") int numOfCards);
 
 }

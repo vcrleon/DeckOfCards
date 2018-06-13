@@ -3,4 +3,7 @@
     <string name="cards_remaining_mssg">Cards Remaining: %s</string>
     <string name="one_card_error">You must draw at least 1 card</string>
     <string name="less_cards_error">There are only %s cards remaining</string>
+    <string name="how_many_cards">How many cards?</string>
+    <string name="draw_cards">draw cards</string>
+    <string name="shuffle_new_deck">shuffle new deck</string>
 </resources>

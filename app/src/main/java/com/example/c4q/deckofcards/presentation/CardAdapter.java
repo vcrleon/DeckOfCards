@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.c4q.deckofcards.R;
 import com.example.c4q.deckofcards.data.Cards;
@@ -56,8 +57,14 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.CardViewHolder
             cardImage = itemView.findViewById(R.id.card_image);
         }
 
-        public void onBind(Cards cards) {
+        public void onBind(final Cards cards) {
             Picasso.with(itemView.getContext()).load(cards.getImage()).into(cardImage);
+            cardImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(view.getContext(), cards.getValue() + " of " + cards.getSuit(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/greenBackground"
     tools:context="com.example.c4q.deckofcards.MainActivity">
 
     <LinearLayout
@@ -26,7 +27,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="shuffle new deck" />
+            android:text="@string/shuffle_new_deck" />
 
     </LinearLayout>
 
@@ -48,14 +49,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:inputType="number"
-            android:hint="How many cards?"/>
+            android:hint="@string/how_many_cards"/>
 
         <Button
             android:id="@+id/draw_cards_bttn"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="draw cards"/>
+            android:text="@string/draw_cards"/>
 
     </LinearLayout>
 

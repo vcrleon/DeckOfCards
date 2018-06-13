@@ -6,14 +6,14 @@ import java.util.List;
  * Created by c4q on 6/9/18.
  */
 
-public class ShuffleApiResponse {
+public class CardApiResponse {
     private boolean success;
     private boolean shuffled;
     private String deck_id;
     private int remaining;
     private List<Cards> cards;
 
-    public ShuffleApiResponse(boolean success, boolean shuffled, String deck_id, int remaining, List<Cards> cards) {
+    public CardApiResponse(boolean success, boolean shuffled, String deck_id, int remaining, List<Cards> cards) {
         this.success = success;
         this.shuffled = shuffled;
         this.deck_id = deck_id;
